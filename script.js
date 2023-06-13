@@ -32,6 +32,7 @@ function agregarCliente (){
         ["clienteEmail", clienteEmail],
         ["clienteBirthday", clienteBirthday],
         ["clienteNacionalidad", clienteNacionalidad],
+        ["clientePuntos", 0],
     ]);
     alert(`Se guardara el cliente ${clienteName} ${clienteApellido} en el registro`);
     listaClientes.push(cliente);
@@ -212,7 +213,7 @@ document.getElementById("btnComprarTiquete").addEventListener("click", generarFa
 function llenarCampos(){
     //select para clientes
     const ventasSelectCLiente  = document.getElementById("ventasInCLiente");
-    ventasSelectCLiente.innerHTML = "";
+    ventasSelectCLiente.innerHTML = "<option selected>Seleccione el Cliente</option>";
     listaClientes.forEach(element => {
         const conteOpCliente = document.createElement("option");
         const nodeOpCliente = document.createTextNode((element.get("clienteName")));
@@ -226,7 +227,7 @@ function llenarCampos(){
     });
     //select para rutas
     const ventasSelectRuta = document.getElementById("ventasInRuta");
-    ventasSelectRuta.innerHTML = "";
+    ventasSelectRuta.innerHTML = "<option selected>Seleccione la ruta</option>";
     listaRutas.forEach(element => {
         const conteOpRuta = document.createElement("option");
         const nodeOpRuta = document.createTextNode((element.get("rutaNombre")));
@@ -250,24 +251,24 @@ const mostrarFactura = {
     mTRuteValuTotal : document.getElementById("mTRuteValuTotal"),
     mTRutePuntos : document.getElementById("mTRutePuntos"),
     limpiarCampos : function (){
-        this.mTdUserName = innerHTML("");
-        this.mTdUserIDe = innerHTML("");
-        this.mTdRuteName = innerHTML("");
-        this.mTdRuteValu = innerHTML("");
-        this.mTdRuteTA = innerHTML("");
-        this.mTdRuteIva = innerHTML("");
-        this.mTRuteValuTotal = innerHTML("");
-        this.mTRutePuntos = innerHTML("");
+        this.mTdUserName.innerHTML="";
+        this.mTdUserIDe.innerHTML="";
+        this.mTdRuteName.innerHTML="";
+        this.mTdRuteValu.innerHTML="";
+        this.mTdRuteTA.innerHTML="";
+        this.mTdRuteIva.innerHTML="";
+        this.mTRuteValuTotal.innerHTML="";
+        this.mTRutePuntos.innerHTML="";
     },
     llenarCampos: function(userNAme, userId, rutaName, rutaValu, rutaTA, rutaIva, rutaValuTotal, rutaPuntos){
-        this.mTdUserName = innerHTML(userNAme);
-        this.mTdUserIDe = innerHTML(userId);
-        this.mTdRuteName = innerHTML(rutaName);
-        this.mTdRuteValu = innerHTML(rutaValu);
-        this.mTdRuteTA = innerHTML(rutaTA);
-        this.mTdRuteIva = innerHTML(rutaIva);
-        this.mTRuteValuTotal = innerHTML(rutaValuTotal);
-        this.mTRutePuntos = innerHTML(rutaPuntos);
+        this.mTdUserName.innerHTML=(userNAme);
+        this.mTdUserIDe.innerHTML=(userId);
+        this.mTdRuteName.innerHTML=(rutaName);
+        this.mTdRuteValu.innerHTML=(rutaValu);
+        this.mTdRuteTA.innerHTML=(rutaTA);
+        this.mTdRuteIva.innerHTML=(rutaIva);
+        this.mTRuteValuTotal.innerHTML=(rutaValuTotal);
+        this.mTRutePuntos.innerHTML=(rutaPuntos);
     },
 };
 
@@ -288,12 +289,34 @@ function generarFactura(){
     let rutaName = ruta.get("rutaNombre");
     let rutaPuntos = ruta.get("rutaPuntos");
     mostrarFactura.llenarCampos(user, userId, rutaName, rutaValor, tasaAero, tasaIva, valutotal, rutaPuntos);
+    let clientePuntos = Number(cliente.get("clientePuntos")) + Number(rutaPuntos)
+    listaClientes[ventasCLiente].set("clientePuntos", clientePuntos);
+    console.log(clientePuntos);
 };
-
-
-
-
 ////////////////////////////////////////////////////////////////
+function llenarCliFidelizacion (){
+    const fidelizacionSelectCLiente  = document.getElementById("selectClientePuntos");
+    fidelizacionSelectCLiente.innerHTML = "<option selected>Seleccione el Cliente</option>";
+    listaClientes.forEach(element => {
+        const conteOpCliente = document.createElement("option");
+        const nodeOpCliente = document.createTextNode((element.get("clienteName")));
+        const valuOpCliente = listaClientes.indexOf(element);
+
+        conteOpCliente.appendChild(nodeOpCliente);
+
+        conteOpCliente.setAttribute("value", valuOpCliente);
+
+        fidelizacionSelectCLiente.appendChild(conteOpCliente)
+    });
+};
+function mostrarPuntos(){
+    const cliente  = document.getElementById("selectClientePuntos").value;
+    let puntos = listaClientes[cliente].get("clientePuntos");
+    console.log("puntos",puntos);
+    document.getElementById("mostrarPuntos").innerHTML = `${puntos} Puntos`;
+};
+document.getElementById("selectClientePuntos").addEventListener("mouseover", llenarCliFidelizacion);
+document.getElementById("inPuntosMostrar").addEventListener("click", mostrarPuntos);
 
 // implementacion de recursos para seccion fidelizacion
 //llamado de funciones al iniciar
