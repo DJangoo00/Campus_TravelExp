@@ -1,0 +1,18 @@
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+input {
+    border-radius: 4px;
+    margin: 2px;
+    padding: 2px;
+}
+button {
+    border-radius: 4px;
+}
+select {
+    margin: 3px;
+}
+#myCarousel {
+    margin: 5px;
+}
