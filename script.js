@@ -11,30 +11,33 @@ function cambiarSeccion() {
 // implementacion de recursos para seccion home
 ////////////////////////////////////////////////////////////////
 
-// implementacion de recursos para seccion cleintes
+// instanciar listas para guardar informacion
 var listaClientes = [];
+var listaRutas = [];
+////////////////////////////////////////////////////////////////
+// implementacion de recursos para seccion cleintes
 document.getElementById("btnAgregarCliente").addEventListener("click",agregarCliente);
 document.getElementById("btnDeleteCliente").addEventListener("click",eliminarClienteCliente);
 
 function agregarCliente (){
-    const clientenIDe = document.getElementById("formNumIde").value;
-    const clienteName = document.getElementById("formNombres").value;
-    const clienteApellido = document.getElementById("formApellidos").value;
-    const clienteTel = document.getElementById("formTel").value;
-    const clienteEmail = document.getElementById("formCorreo").value;
-    const clienteBirthday = document.getElementById("formBirthday").value;
-    const clienteNacionalidad = document.getElementById("formNacionalidad").value;
-    const cliente = new Map ([
-        ["clientenIDe", clientenIDe],
-        ["clienteName", clienteName],
-        ["clienteApellido", clienteApellido],
-        ["clienteTel", clienteTel],
-        ["clienteEmail", clienteEmail],
-        ["clienteBirthday", clienteBirthday],
-        ["clienteNacionalidad", clienteNacionalidad],
-        ["clientePuntos", 0],
-    ]);
-    alert(`Se guardara el cliente ${clienteName} ${clienteApellido} en el registro`);
+    const clientenIDeValue = document.getElementById("formNumIde").value;
+    const clienteNameValue = document.getElementById("formNombres").value;
+    const clienteApellidoValue = document.getElementById("formApellidos").value;
+    const clienteTelValue = document.getElementById("formTel").value;
+    const clienteEmailValue = document.getElementById("formCorreo").value;
+    const clienteBirthdayValue = document.getElementById("formBirthday").value.toString();
+    const clienteNacionalidadValue = document.getElementById("formNacionalidad").value;
+    const cliente = {
+        clienteIDe: clientenIDeValue,
+        clienteName: clienteNameValue,
+        clienteApellido: clienteApellidoValue,
+        clienteTel: clienteTelValue,
+        clienteEmail: clienteEmailValue,
+        clienteBirthday: clienteBirthdayValue,
+        clienteNacionalidad: clienteNacionalidadValue,
+        clientePuntos: 0,
+    };
+    alert(`Se guardara el cliente ${clienteNameValue} ${clienteApellidoValue} en el registro`);
     listaClientes.push(cliente);
     console.log("consoleAgregarCliente",listaClientes)
     guardarLocalStorage();
@@ -43,7 +46,7 @@ function agregarCliente (){
 };
 function eliminarClienteCliente (){
     const eliminarCliente = document.getElementById("inputIdCliente").value;
-    alert(`Se eliminarClientea al cliente ${listaClientes[eliminarCliente].get("clienteName")} ${listaClientes[eliminarCliente].get("clienteApellido")} del registro`);
+    alert(`Se eliminarClientea al cliente ${listaClientes[eliminarCliente].clienteName} ${listaClientes[eliminarCliente].clienteApellido} del registro`);
     listaClientes.splice(eliminarCliente,1);
     console.log("consoleeliminarClienteCliente",listaClientes);
     mostrarClientes();
@@ -103,13 +106,13 @@ function mostrarClientes (){
     console.log("consolMostrarClientes",listaClientes)
     listaClientes.forEach(element => {
         const nIDe = listaClientes.indexOf(element);
-        const numIden = element.get("clientenIDe");
-        const name = element.get("clienteName");
-        const apellido = element.get("clienteApellido");
-        const tel = element.get("clienteTel");
-        const email = element.get("clienteEmail");
-        const birthday = element.get("clienteBirthday");
-        const nacionalidad = element.get("clienteNacionalidad");
+        const numIden = element.clienteIDe;
+        const name = element.clienteName;
+        const apellido = element.clienteApellido;
+        const tel = element.clienteTel;
+        const email = element.clienteEmail;
+        const birthday = element.clienteBirthday;
+        const nacionalidad = element.clienteNacionalidad;
         console.log(element)
         //llamar funcion para crear cada row
         crearRowCliente(nIDe, numIden, name, apellido, tel, email, birthday, nacionalidad);
@@ -118,36 +121,37 @@ function mostrarClientes (){
 ////////////////////////////////////////////////////////////////
 
 // implementacion de recursos para seccion rutas
-const listaRutas = [];
+
 document.getElementById("btnAgregarRuta").addEventListener("click",agregarRuta);
 document.getElementById("btnDeleteRuta").addEventListener("click",eliminarRuta);
 
 function agregarRuta (){
-    const rutaNombre = document.getElementById("formNombreRuta").value;
-    const rutaValor = document.getElementById("formValorTiquete").value;
-    const rutaOrigen = document.getElementById("formCityOrigen").value;
-    const rutaDestino = document.getElementById("formCityDestino").value;
-    const rutaPuntos = document.getElementById("formPuntosFideli").value;
-    const ruta = new Map ([
-        ["rutaNombre", rutaNombre],
-        ["rutaValor", rutaValor],
-        ["rutaOrigen", rutaOrigen],
-        ["rutaDestino", rutaDestino],
-        ["rutaPuntos", rutaPuntos],
-    ]);
-    alert(`Se guardara la ruta ${rutaNombre} en el registro`);
+    const rutaNombreValue = document.getElementById("formNombreRuta").value;
+    const rutaValorValue = document.getElementById("formValorTiquete").value;
+    const rutaOrigenValue = document.getElementById("formCityOrigen").value;
+    const rutaDestinoValue = document.getElementById("formCityDestino").value;
+    const rutaPuntosValue = document.getElementById("formPuntosFideli").value;
+    const ruta = {
+        rutaNombre: rutaNombreValue,
+        rutaValor: rutaValorValue,
+        rutaOrigen: rutaOrigenValue,
+        rutaDestino: rutaDestinoValue,
+        rutaPuntos: rutaPuntosValue
+    };
+    alert(`Se guardara la ruta ${rutaNombreValue} en el registro`);
     listaRutas.push(ruta);
-    console.log("consoleAgregarRuta",listaRutas)
+    console.log("consoleAgregarRuta",listaRutas);
+    guardarLocalStorage();
     mostrarRutas();
     llenarCampos();
 };
 
 function eliminarRuta (){
     const eliminarRuta = document.getElementById("inputIdCliente").value;
-    alert(`Se eliminarClientea al cliente ${listaClientes[eliminarRuta].get("clienteName")} ${listaClientes[eliminarCliente].get("clienteApellido")} del registro`);
-    listaClientes.splice(eliminarRuta,1);
-    console.log("consoleeliminarClienteCliente",listaClientes);
-    mostrarClientes();
+    alert(`Se eliminara la ruta ${listaRutas[eliminarRuta].rutaName} del registro`);
+    listaRutas.splice(eliminarRuta,1);
+    console.log("consoleeliminarClienteCliente",listaRutas);
+    mostrarRutas();
 };
 
 function crearRowRuta (nIdRuta, nameRuta, valueRuta, originRuta, destinoRuta, puntosRuta){
@@ -196,11 +200,11 @@ function mostrarRutas (){
     console.log("consoleMostrarRutas",listaRutas);
     listaRutas.forEach(element => {
         const nIdRuta = listaRutas.indexOf(element);
-        const nameRuta = element.get("rutaNombre");
-        const valueRuta = element.get("rutaValor");
-        const originRuta = element.get("rutaOrigen");
-        const destinoRuta = element.get("rutaDestino");
-        const puntosRuta = element.get("rutaPuntos");
+        const nameRuta = element.rutaNombre;
+        const valueRuta = element.rutaValor;
+        const originRuta = element.rutaOrigen;
+        const destinoRuta = element.rutaDestino;
+        const puntosRuta = element.rutaPuntos;
         console.log(element)
         //llamar funcion para crear cada row
         crearRowRuta(nIdRuta, nameRuta, valueRuta, originRuta, destinoRuta, puntosRuta);
@@ -216,7 +220,7 @@ function llenarCampos(){
     ventasSelectCLiente.innerHTML = "<option selected>Seleccione el Cliente</option>";
     listaClientes.forEach(element => {
         const conteOpCliente = document.createElement("option");
-        const nodeOpCliente = document.createTextNode((element.get("clienteName")));
+        const nodeOpCliente = document.createTextNode((element.clienteName));
         const valuOpCliente = listaClientes.indexOf(element);
 
         conteOpCliente.appendChild(nodeOpCliente);
@@ -230,7 +234,7 @@ function llenarCampos(){
     ventasSelectRuta.innerHTML = "<option selected>Seleccione la ruta</option>";
     listaRutas.forEach(element => {
         const conteOpRuta = document.createElement("option");
-        const nodeOpRuta = document.createTextNode((element.get("rutaNombre")));
+        const nodeOpRuta = document.createTextNode(element.rutaNombre);
         const valuOpRuta = listaRutas.indexOf(element);
 
         conteOpRuta.appendChild(nodeOpRuta);
@@ -280,26 +284,27 @@ function generarFactura(){
     let ruta = listaRutas[ventasRuta];
     console.log("cliente",cliente);
     console.log("ruta",ruta);
-    let rutaValor = ruta.get("rutaValor");
+    let rutaValor = ruta.rutaValor;
     let tasaAero = (rutaValor)*0.04
     let tasaIva = (rutaValor)*0.16
     let valutotal = (tasaAero + tasaIva) + Number(rutaValor);
-    let user = cliente.get("clienteName") + " " + cliente.get("clienteApellido");
-    let userId = cliente.get("clientenIDe");
-    let rutaName = ruta.get("rutaNombre");
-    let rutaPuntos = ruta.get("rutaPuntos");
+    let user = cliente.clienteName + " " + cliente.clienteApellido;
+    let userId = cliente.clientenIDe;
+    let rutaName = ruta.rutaNombre;
+    let rutaPuntos = ruta.rutaPuntos;
     mostrarFactura.llenarCampos(user, userId, rutaName, rutaValor, tasaAero, tasaIva, valutotal, rutaPuntos);
-    let clientePuntos = Number(cliente.get("clientePuntos")) + Number(rutaPuntos)
-    listaClientes[ventasCLiente].set("clientePuntos", clientePuntos);
+    let clientePuntos = Number(cliente.clientePuntos) + Number(rutaPuntos)
+    listaClientes[ventasCLiente].clientePuntos = clientePuntos;
     console.log(clientePuntos);
 };
 ////////////////////////////////////////////////////////////////
+// implementacion de recursos para seccion fidelizacion
 function llenarCliFidelizacion (){
     const fidelizacionSelectCLiente  = document.getElementById("selectClientePuntos");
     fidelizacionSelectCLiente.innerHTML = "<option selected>Seleccione el Cliente</option>";
     listaClientes.forEach(element => {
         const conteOpCliente = document.createElement("option");
-        const nodeOpCliente = document.createTextNode((element.get("clienteName")));
+        const nodeOpCliente = document.createTextNode((element.clienteName));
         const valuOpCliente = listaClientes.indexOf(element);
 
         conteOpCliente.appendChild(nodeOpCliente);
@@ -311,17 +316,15 @@ function llenarCliFidelizacion (){
 };
 function mostrarPuntos(){
     const cliente  = document.getElementById("selectClientePuntos").value;
-    let puntos = listaClientes[cliente].get("clientePuntos");
+    let puntos = listaClientes[cliente].clientePuntos;
     console.log("puntos",puntos);
     document.getElementById("mostrarPuntos").innerHTML = `${puntos} Puntos`;
 };
 document.getElementById("selectClientePuntos").addEventListener("mouseover", llenarCliFidelizacion);
 document.getElementById("inPuntosMostrar").addEventListener("click", mostrarPuntos);
 
-// implementacion de recursos para seccion fidelizacion
-//llamado de funciones al iniciar
-mostrarClientes();
-mostrarRutas();
+
+
 //funciones para localstorage
 function guardarLocalStorage () {
     console.log("guardarlocal",JSON.stringify(listaClientes));
@@ -330,8 +333,27 @@ function guardarLocalStorage () {
     localStorage.setItem("rutas",JSON.stringify(listaRutas));
     console.log("storageRutas",JSON.parse(localStorage.getItem("rutas")));
 };
-function leerLocalStorage () {
-    listaClientes = JSON.parse(localStorage.getItem("clientes"));
-    listaRutas = JSON.parse(localStorage.getItem("rutas"));
+const leerLocalStorage = {
+    localListaClientes: JSON.parse(localStorage.getItem("clientes")),
+    localListaRutas: JSON.parse(localStorage.getItem("rutas"))
 };
-
+////////////////////////////////////////////////////////////////////////
+//traeer informacion existente
+function cargarInfo() {
+    if (leerLocalStorage.localListaClientes != null) {
+        console.log("lectura de local",leerLocalStorage.localListaClientes);
+        leerLocalStorage.localListaClientes.forEach(element => {
+            listaClientes.push(element)});
+        };
+    if (leerLocalStorage.localListaRutas != null) {
+        leerLocalStorage.localListaRutas.forEach(element => {
+            listaRutas.push(element)});
+        }
+};
+////////////////////////////////////////////////////////////////
+//llamado de funciones al iniciar
+// carga de informacion
+cargarInfo();
+//carga de informacion en campos
+mostrarClientes();
+mostrarRutas();
